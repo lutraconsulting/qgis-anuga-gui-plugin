@@ -1,6 +1,6 @@
 This is the repository for the Open Source Software project
 
-GAI - Graphical ANUGA Interface
+GAI - Graphical ANUGA Interface (pronounced "JAY")
 
 which aims at developing an intuitive visual front end for setting up ANUGA models.
 
@@ -9,6 +9,8 @@ The main developers are currently
   Saber
   
 with Ole Nielsen who is leading the ANUGA software development project as project advisor.
+
+For installation instructions, please refer to INSTALL.txt
 
 
   

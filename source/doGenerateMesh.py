@@ -7,6 +7,7 @@ from qgis.gui import *
 from frmListBox import Ui_Dialog
 
 import os
+from string import split
 
 class Dialog(QDialog, Ui_Dialog):
 
@@ -47,6 +48,9 @@ class Dialog(QDialog, Ui_Dialog):
     # Set up a temp work directory
     temp_dir = "/tmp/anugaInterface"
     self.setupTempDir(temp_dir)
+    
+    # Get geo-referencing info from boundary poly layer
+    
     
     # Write a CSV describing the boundary polygon to disk
     regionLayerName = self.regionComboBox.currentText()
@@ -112,12 +116,23 @@ class Dialog(QDialog, Ui_Dialog):
     #Store the minimum triangle area:
     minTriAngle = self.minTriAngleLineEdit.text()
     
+    # Get geo-referencing info from boundary poly layer - currently 
+    # commented out due to a possible bug in QGIS - tagged already
+    # srsID = regionLayer.srs().srsid()
+    srsID = 2992
+        
     # Write python script to generate our mesh
-    if self.writeMeshGenerationScript( boundaryPolyCSVFilename, domMaxTriArea, minTriAngle, internalPolyFileNames, holePolyFileNames, internalPolyResolutions, bTagList ) != 0:
+    if self.writeMeshGenerationScript( boundaryPolyCSVFilename, domMaxTriArea, minTriAngle, internalPolyFileNames, holePolyFileNames, internalPolyResolutions, bTagList, srsID ) != 0:
       QMessageBox.information(None, "ERROR", "Could not write out mesh generation scripts" )
       return
       
     QMessageBox.information(None, "DEBUG", "PAUSE - please generate the mesh manually" )
+    
+    self.asciiMeshToGIS( "/tmp/anugaInterface/genMSH.tsh" )
+    
+    # Execute the python script we just made
+    
+    # Read in the mesh as GIS layers
       
     #inFileName = "/tmp/anugaInterface/meshGEN.tsh"
     #outFileName = "/tmp/anugaInterface/balls.shp"
@@ -131,11 +146,75 @@ class Dialog(QDialog, Ui_Dialog):
   
   #====================================================================
   # 
-  # readASCIIMesh reads in a given ASCII mesh file and writes out the 
-  # lines to a given layer for DEBUG purposes
+  # asciiMeshToGIS -  imports the generated mesh as a collection of 
+  #                   lines allowing the user to visualise the mesh in 
+  #                   the GIS environment
+  # 
   #====================================================================
-  #def asciiMeshToGIS(self, inFileName, outFileName ):
+  def asciiMeshToGIS(self, meshFile):
     
+    fields = { 0 : QgsField("ID", QVariant.Int) }
+               
+    writer = QgsVectorFileWriter("/tmp/anugaInterface/testOut.shp", "CP1250", fields, QGis.WKBLineString, None)
+    
+    if writer.hasError() != QgsVectorFileWriter.NoError:
+      QMessageBox.information(None, "ERROR", "Error when creating shapefile: " + writer.hasError() )
+      
+    inMesh = open( meshFile, "r" )
+    
+    # Determine how many points we have
+    fileLine = inMesh.readline()
+    splitLine = split(fileLine)
+    pointCount = int(splitLine[0])
+    #QMessageBox.information(None, "DEBUG", splitLine[0] + " Points" )
+    
+    points = []
+    
+    i = 0
+    while i < pointCount:
+      fileLine = inMesh.readline()
+      splitLine = split(fileLine)
+      xVal = float(splitLine[1])
+      yVal = float(splitLine[2])
+      # Add the data
+      points.append( [xVal, yVal] )
+      i = i + 1
+      
+    fileLine = inMesh.readline()
+    fileLine = inMesh.readline()
+    splitLine = split(fileLine)
+    triCount = int(splitLine[0])
+    
+    i = 0
+    while i < triCount:
+      fileLine = inMesh.readline()
+      splitLine = split(fileLine)
+      triID = int(splitLine[0])
+      vertOne = int(splitLine[1])
+      vertTwo = int(splitLine[2])
+      vertThree = int(splitLine[3])
+      
+      fet = QgsFeature()
+      fet.setGeometry(QgsGeometry.fromPolyline( [QgsPoint(points[vertOne][0],points[vertOne][1]),QgsPoint(points[vertTwo][0],points[vertTwo][1])] ))
+      fet.addAttribute(0, QVariant(triID))
+      writer.addFeature(fet)
+      
+      fet = QgsFeature()
+      fet.setGeometry(QgsGeometry.fromPolyline( [QgsPoint(points[vertTwo][0],points[vertTwo][1]),QgsPoint(points[vertThree][0],points[vertThree][1])] ))
+      fet.addAttribute(0, QVariant(triID))
+      writer.addFeature(fet)
+      
+      fet = QgsFeature()
+      fet.setGeometry(QgsGeometry.fromPolyline( [QgsPoint(points[vertThree][0],points[vertThree][1]),QgsPoint(points[vertOne][0],points[vertOne][1])] ))
+      fet.addAttribute(0, QVariant(triID))
+      writer.addFeature(fet)     
+      
+      i = i + 1
+    
+    inMesh.close()
+    
+    del writer
+        
     # Set up a new layer
     
     # Load the mesh file into a structure
@@ -169,7 +248,7 @@ class Dialog(QDialog, Ui_Dialog):
   #                               script to actually generate the mesh
   # 
   # ===================================================================
-  def writeMeshGenerationScript(self, boundaryPolyCSVFilename, domMaxTriArea, minTriAngle, internalPolyFileNames, holePolyFileNames, internalPolyResolutions, bTagList ):
+  def writeMeshGenerationScript(self, boundaryPolyCSVFilename, domMaxTriArea, minTriAngle, internalPolyFileNames, holePolyFileNames, internalPolyResolutions, bTagList, srsID ):
     try:
       outFile = open( "/tmp/anugaInterface/generateMesh.py", "w" )
     except:
@@ -191,7 +270,32 @@ class Dialog(QDialog, Ui_Dialog):
     
     outFile.write( "# Import nessisary libs\n" )
     outFile.write( "from anuga.utilities.polygon import read_polygon\n" )
-    outFile.write( "from anuga.pmesh.mesh_interface import create_mesh_from_regions\n\n" )
+    outFile.write( "from anuga.pmesh.mesh_interface import create_mesh_from_regions\n" )
+    outFile.write( "from anuga.coordinate_transforms.geo_reference import Geo_reference\n\n" )
+    
+    # Determine our UTM zone:
+    if srsID > 3043 and srsID < 3104:
+      hem = "S"
+      zone = srsID - 3043
+    elif srsID > 2977 and srsID < 3038:
+      hem = "N"
+      zone = srsID - 2977
+    else:
+      QMessageBox.information(None, "ERROR", "SRSID " + str(srsID) + " doesn't appear to be a UTM zone" )
+      return -1
+    
+    outFile.write( "# Geo_reference:\n" )
+    outFile.write( "geo_ref = Geo_reference(zone = " + str(zone) + ",\n" )
+    outFile.write( "                        xllcorner = 0.0,\n" )
+    outFile.write( "                        yllcorner = 0.0,\n" )
+    outFile.write( "                        datum = \"wgs84\",\n" )
+    outFile.write( "                        projection = \"UTM\",\n" )
+    outFile.write( "                        units = \"m\",\n" )
+    outFile.write( "                        false_easting = 500000,\n" )
+    if hem is "N":
+      outFile.write( "                        false_northing = 0)\n\n" )
+    else:
+      outFile.write( "                        false_northing = 10000000)\n\n" )
     
     outFile.write( "# Bounding polygon for study area\n" )
     outFile.write( "bounding_polygon = read_polygon(\"" + boundaryPolyCSVFilename + "\")\n\n" )
@@ -283,9 +387,11 @@ class Dialog(QDialog, Ui_Dialog):
       i = i + 1
     outFile.write( "},\n" )
     outFile.write( "                         maximum_triangle_area=" + str(domMaxTriArea) + ",\n")
-    outFile.write( "                         filename=\"/tmp/anugaInterface/genMSH.msh\",\n")
+    outFile.write( "                         filename=\"/tmp/anugaInterface/genMSH.tsh\",\n")
     outFile.write( "                         interior_regions=interior_regions,\n")
     outFile.write( "                         interior_holes=interior_holes,\n")
+    outFile.write( "                         poly_geo_reference = geo_ref,\n")
+    outFile.write( "                         mesh_geo_reference = geo_ref,\n")
     outFile.write( "                         minimum_triangle_angle=" + str(minTriAngle) + ",\n")
     outFile.write( "                         use_cache=False,\n")
     outFile.write( "                         verbose=True)\n\n")
@@ -463,5 +569,3 @@ class Dialog(QDialog, Ui_Dialog):
         vlayer = QgsVectorLayer(str(layer.source()),  str(myName),  str(layer.getDataProvider().name()))
         if vlayer.isValid():
           return vlayer
-
-

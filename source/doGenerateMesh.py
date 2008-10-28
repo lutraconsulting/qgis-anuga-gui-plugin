@@ -42,6 +42,9 @@ class Dialog(QDialog, Ui_Dialog):
   # accept -  On user clicking "Generate" a python script will be
   #           created to generate a mesh.
   #
+  #           TODO
+  #             Add windows support manualCheckBox
+  #
   #====================================================================
   def accept(self):
     
@@ -128,10 +131,20 @@ class Dialog(QDialog, Ui_Dialog):
       QMessageBox.information(None, "ERROR", "Could not write out mesh generation scripts" )
       return
       
-    QMessageBox.information(None, "DEBUG", "PAUSE - please generate the mesh manually" )
-    
+    if self.force24CheckBox.checkState() == 2:
+      os.system("python2.4 /tmp/anugaInterface/generateMesh.py")
+    elif self.force24CheckBox.checkState() == 0:
+      os.system("python /tmp/anugaInterface/generateMesh.py")
+
     self.asciiMeshToGIS( "/tmp/anugaInterface/genMSH.tsh" )
     
+    tmpMeshLayer = QgsVectorLayer("/tmp/anugaInterface/testOut.shp", "Temp Mesh", "ogr")
+    if not tmpMeshLayer.isValid():
+      QMessageBox.information(None, "ERROR", "Failed to load mesh shape" )
+    else:
+      QgsMapLayerRegistry.instance().addMapLayer(tmpMeshLayer)
+      QMessageBox.information(None, "DEBUG", "Layer loaded" )
+
     # Execute the python script we just made
     
     # Read in the mesh as GIS layers

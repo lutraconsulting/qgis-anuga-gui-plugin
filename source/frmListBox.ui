@@ -6,62 +6,123 @@
     <x>0</x>
     <y>0</y>
     <width>252</width>
-    <height>175</height>
+    <height>206</height>
    </rect>
   </property>
   <property name="windowTitle" >
    <string>ANUGA Interface - Generate Mesh</string>
   </property>
-  <layout class="QGridLayout" >
-   <item row="0" column="0" colspan="3" >
-    <widget class="QLabel" name="label" >
-     <property name="text" >
-      <string>Region Layer</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0" colspan="3" >
-    <widget class="QComboBox" name="regionComboBox" />
-   </item>
-   <item row="2" column="0" colspan="3" >
-    <widget class="QLabel" name="label_2" >
-     <property name="text" >
-      <string>Boundary Tag Layer</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0" colspan="3" >
-    <widget class="QComboBox" name="boundaryTagComboBox" />
-   </item>
-   <item row="4" column="0" colspan="2" >
-    <widget class="QLabel" name="label_3" >
-     <property name="text" >
-      <string>Minimum Triangle Angle (degrees)</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="2" >
-    <widget class="QLineEdit" name="minTriAngleLineEdit" >
-     <property name="text" >
-      <string>28</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="0" >
-    <widget class="QPushButton" name="generateButton" >
-     <property name="text" >
-      <string>Generate</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="1" colspan="2" >
-    <widget class="QPushButton" name="closeButton" >
-     <property name="text" >
-      <string>Close</string>
-     </property>
-    </widget>
-   </item>
-  </layout>
+  <widget class="QLabel" name="label" >
+   <property name="geometry" >
+    <rect>
+     <x>9</x>
+     <y>9</y>
+     <width>234</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text" >
+    <string>Region Layer</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="regionComboBox" >
+   <property name="geometry" >
+    <rect>
+     <x>9</x>
+     <y>30</y>
+     <width>234</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2" >
+   <property name="geometry" >
+    <rect>
+     <x>9</x>
+     <y>59</y>
+     <width>234</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text" >
+    <string>Boundary Tag Layer</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="boundaryTagComboBox" >
+   <property name="geometry" >
+    <rect>
+     <x>9</x>
+     <y>80</y>
+     <width>234</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3" >
+   <property name="geometry" >
+    <rect>
+     <x>9</x>
+     <y>109</y>
+     <width>192</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="text" >
+    <string>Minimum Triangle Angle (degrees)</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="minTriAngleLineEdit" >
+   <property name="geometry" >
+    <rect>
+     <x>206</x>
+     <y>109</y>
+     <width>37</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="text" >
+    <string>28</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="generateButton" >
+   <property name="geometry" >
+    <rect>
+     <x>9</x>
+     <y>170</y>
+     <width>91</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <property name="text" >
+    <string>Generate</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="closeButton" >
+   <property name="geometry" >
+    <rect>
+     <x>110</x>
+     <y>170</y>
+     <width>133</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <property name="text" >
+    <string>Close</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="force24CheckBox" >
+   <property name="geometry" >
+    <rect>
+     <x>10</x>
+     <y>140</y>
+     <width>171</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text" >
+    <string>Force python 2.4</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections>

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'frmListBox.ui'
 #
-# Created: Fri Aug  8 11:01:21 2008
+# Created: Tue Oct 28 22:51:26 2008
 #      by: PyQt4 UI code generator 4.3.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -12,42 +12,43 @@ from PyQt4 import QtCore, QtGui
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(QtCore.QSize(QtCore.QRect(0,0,252,175).size()).expandedTo(Dialog.minimumSizeHint()))
-
-        self.gridlayout = QtGui.QGridLayout(Dialog)
-        self.gridlayout.setObjectName("gridlayout")
+        Dialog.resize(QtCore.QSize(QtCore.QRect(0,0,252,206).size()).expandedTo(Dialog.minimumSizeHint()))
 
         self.label = QtGui.QLabel(Dialog)
+        self.label.setGeometry(QtCore.QRect(9,9,234,16))
         self.label.setObjectName("label")
-        self.gridlayout.addWidget(self.label,0,0,1,3)
 
         self.regionComboBox = QtGui.QComboBox(Dialog)
+        self.regionComboBox.setGeometry(QtCore.QRect(9,30,234,22))
         self.regionComboBox.setObjectName("regionComboBox")
-        self.gridlayout.addWidget(self.regionComboBox,1,0,1,3)
 
         self.label_2 = QtGui.QLabel(Dialog)
+        self.label_2.setGeometry(QtCore.QRect(9,59,234,16))
         self.label_2.setObjectName("label_2")
-        self.gridlayout.addWidget(self.label_2,2,0,1,3)
 
         self.boundaryTagComboBox = QtGui.QComboBox(Dialog)
+        self.boundaryTagComboBox.setGeometry(QtCore.QRect(9,80,234,22))
         self.boundaryTagComboBox.setObjectName("boundaryTagComboBox")
-        self.gridlayout.addWidget(self.boundaryTagComboBox,3,0,1,3)
 
         self.label_3 = QtGui.QLabel(Dialog)
+        self.label_3.setGeometry(QtCore.QRect(9,109,192,22))
         self.label_3.setObjectName("label_3")
-        self.gridlayout.addWidget(self.label_3,4,0,1,2)
 
         self.minTriAngleLineEdit = QtGui.QLineEdit(Dialog)
+        self.minTriAngleLineEdit.setGeometry(QtCore.QRect(206,109,37,22))
         self.minTriAngleLineEdit.setObjectName("minTriAngleLineEdit")
-        self.gridlayout.addWidget(self.minTriAngleLineEdit,4,2,1,1)
 
         self.generateButton = QtGui.QPushButton(Dialog)
+        self.generateButton.setGeometry(QtCore.QRect(9,170,91,26))
         self.generateButton.setObjectName("generateButton")
-        self.gridlayout.addWidget(self.generateButton,5,0,1,1)
 
         self.closeButton = QtGui.QPushButton(Dialog)
+        self.closeButton.setGeometry(QtCore.QRect(110,170,133,26))
         self.closeButton.setObjectName("closeButton")
-        self.gridlayout.addWidget(self.closeButton,5,1,1,2)
+
+        self.force24CheckBox = QtGui.QCheckBox(Dialog)
+        self.force24CheckBox.setGeometry(QtCore.QRect(10,140,171,21))
+        self.force24CheckBox.setObjectName("force24CheckBox")
 
         self.retranslateUi(Dialog)
         QtCore.QObject.connect(self.closeButton,QtCore.SIGNAL("clicked()"),Dialog.close)
@@ -62,4 +63,5 @@ class Ui_Dialog(object):
         self.minTriAngleLineEdit.setText(QtGui.QApplication.translate("Dialog", "28", None, QtGui.QApplication.UnicodeUTF8))
         self.generateButton.setText(QtGui.QApplication.translate("Dialog", "Generate", None, QtGui.QApplication.UnicodeUTF8))
         self.closeButton.setText(QtGui.QApplication.translate("Dialog", "Close", None, QtGui.QApplication.UnicodeUTF8))
+        self.force24CheckBox.setText(QtGui.QApplication.translate("Dialog", "Force python 2.4", None, QtGui.QApplication.UnicodeUTF8))
 

@@ -118,8 +118,10 @@ class Dialog(QDialog, Ui_Dialog):
     
     # Get geo-referencing info from boundary poly layer - currently 
     # commented out due to a possible bug in QGIS - tagged already
-    # srsID = regionLayer.srs().srsid()
-    srsID = 2992
+    srsID = regionLayer.srs().srsid()
+    
+    # QMessageBox.information(None, "DEBUG", "Just got srsID of " + str(srsID) )
+    # srsID = 2992
         
     # Write python script to generate our mesh
     if self.writeMeshGenerationScript( boundaryPolyCSVFilename, domMaxTriArea, minTriAngle, internalPolyFileNames, holePolyFileNames, internalPolyResolutions, bTagList, srsID ) != 0:

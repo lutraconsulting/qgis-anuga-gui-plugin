@@ -336,7 +336,8 @@ class Dialog(QDialog, Ui_Dialog):
       i = i + 1
       
     outFile.write( "\n" )
-    outFile.write( "interior_regions = [" )
+    if len(internalPolyFileNames) > 0:
+      outFile.write( "interior_regions = [" )
     i = 0
     while i < len(internalPolyFileNames):
       if i == 0:
@@ -362,7 +363,8 @@ class Dialog(QDialog, Ui_Dialog):
       
     outFile.write( "\n" )
     
-    outFile.write( "interior_holes = [" )
+    if len(holePolyFileNames) > 0:
+      outFile.write( "interior_holes = [" )
     i = 0
     while i < len(holePolyFileNames):
       if i == 0:
@@ -403,8 +405,10 @@ class Dialog(QDialog, Ui_Dialog):
     outFile.write( "},\n" )
     outFile.write( "                         maximum_triangle_area=" + str(domMaxTriArea) + ",\n")
     outFile.write( "                         filename=\"/tmp/anugaInterface/genMSH.tsh\",\n")
-    outFile.write( "                         interior_regions=interior_regions,\n")
-    outFile.write( "                         interior_holes=interior_holes,\n")
+    if len(internalPolyFileNames) > 0:
+      outFile.write( "                         interior_regions=interior_regions,\n")
+    if len(holePolyFileNames) > 0:
+      outFile.write( "                         interior_holes=interior_holes,\n")
     outFile.write( "                         poly_geo_reference = geo_ref,\n")
     outFile.write( "                         mesh_geo_reference = geo_ref,\n")
     outFile.write( "                         minimum_triangle_angle=" + str(minTriAngle) + ",\n")
@@ -581,6 +585,7 @@ class Dialog(QDialog, Ui_Dialog):
     for l in range(nLayers):
       layer = mc.getZpos(l)
       if str(layer.name()) == str(myName):
-        vlayer = QgsVectorLayer(str(layer.source()),  str(myName),  str(layer.getDataProvider().name()))
-        if vlayer.isValid():
-          return vlayer
+      	return layer
+        # vlayer = QgsVectorLayer(str(layer.source()),  str(myName),  str(layer.getDataProvider().name()))
+        # if vlayer.isValid():
+        #   return vlayer

@@ -24,14 +24,14 @@ class Dialog(QDialog, Ui_Dialog):
     self.setupUi(self)
     
     # Populate dialogs
-    mapCanvas = self.iface.getMapCanvas()
+    mapCanvas = self.iface.mapCanvas()
     for i in range(mapCanvas.layerCount()):
-      layer = mapCanvas.getZpos(i)
-      if layer.type() == layer.VECTOR:
-        if layer.vectorType() == 2:
+      layer = mapCanvas.layer(i)
+      if layer.type() == layer.VectorLayer:
+        if layer.geometryType() == 2:
           # Found a polygon layer
           self.regionComboBox.addItem(layer.name())
-        elif layer.vectorType() == 1:
+        elif layer.geometryType() == 1:
           # Found a lines layer
           self.boundaryTagComboBox.addItem(layer.name())
           
@@ -235,7 +235,7 @@ class Dialog(QDialog, Ui_Dialog):
     # Load the mesh file into a structure
     
     # To start with, lets just draw one line
-    #prov = destLayer.getDataProvider()
+    #prov = destLayer.dataProvider()
     #testFeature = QgsFeature()
     #testFeature.setGeometry(QgsGeometry.fromPoint(QgsPoint(10,10)))
     #testFeature.setGeometry(QgsGeometry.fromPolyline( [ QgsPoint(692219.0,14156225.0), QgsPoint(693018.0,14156967.0) ] ) )
@@ -518,24 +518,24 @@ class Dialog(QDialog, Ui_Dialog):
   def featuresOfType(self, selectedRegionLayer, type):
     f=QgsFeature()
     selection = []
-    provider = selectedRegionLayer.getDataProvider()
-    provider.reset()
+    provider = selectedRegionLayer.dataProvider()
+    #provider.reset()
     fieldmap=provider.fields()
     col = -1
     for (k,attr) in fieldmap.iteritems():      
       if ("Type"==attr.name()):
         #QMessageBox.information(None, "DEBUG", "Found type at " + str(k) )
         col = k
-        allAttrs = provider.allAttributesList()
+        allAttrs = provider.attributeIndexes()
         provider.select(allAttrs)
     if col == -1:
       QMessageBox.information(None, "ERROR", "Could not find attribute called \"Type\" in this layer" )
       return selection
-    while (provider.getNextFeature(f)):
+    while (provider.nextFeature(f)):
       fieldmap=f.attributeMap()
       #QMessageBox.information(None, "DEBUG", "Looking at feature with " + str(len(fieldmap)) + " fields" )
       if fieldmap[col].toString() == type:
-        selection.append(f.featureId())
+        selection.append(f.id())
         #QMessageBox.information(None, "DEBUG", "Found one" )
     return selection
   
@@ -580,12 +580,12 @@ class Dialog(QDialog, Ui_Dialog):
   #
   #====================================================================
   def getVectorLayerByName(self, myName):
-    mc = self.iface.getMapCanvas()
+    mc = self.iface.mapCanvas()
     nLayers = mc.layerCount()
     for l in range(nLayers):
-      layer = mc.getZpos(l)
+      layer = mc.layer(l)
       if str(layer.name()) == str(myName):
       	return layer
-        # vlayer = QgsVectorLayer(str(layer.source()),  str(myName),  str(layer.getDataProvider().name()))
+        # vlayer = QgsVectorLayer(str(layer.source()),  str(myName),  str(layer.dataProvider().name()))
         # if vlayer.isValid():
         #   return vlayer

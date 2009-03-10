@@ -17,13 +17,13 @@ class AnugaInterface:
 
   def initGui(self):
     # Create Generate Mesh action
-    self.generateMeshAction = QAction(QIcon(":/plugins/anugaInterface/generateMesh.png"), "Generate Mesh", self.iface.getMainWindow())
+    self.generateMeshAction = QAction(QIcon(":/plugins/anugaInterface/generateMesh.png"), "Generate Mesh", self.iface.mainWindow())
     self.generateMeshAction.setWhatsThis("Tool for generating an ANUGA mesh")
     QObject.connect(self.generateMeshAction, SIGNAL("activated()"), self.generateMesh)
     
     # Add toolbar button and menu item
     self.iface.addToolBarIcon(self.generateMeshAction)
-    self.iface.addPluginMenu("&Anuga Interface", self.generateMeshAction)
+    self.iface.addPluginToMenu("&Anuga Interface", self.generateMeshAction)
 
   def unload(self):
     # Remove the plugin menu item and icon

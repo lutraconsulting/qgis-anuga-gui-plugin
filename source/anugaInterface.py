@@ -4,7 +4,8 @@ from PyQt4.QtGui import *
 from qgis.core import *
 from qgis.gui import *
 
-import doGenerateMesh
+#import doGenerateMesh
+import doGenerateMeshNG
 
 import resources
 
@@ -17,19 +18,28 @@ class AnugaInterface:
 
   def initGui(self):
     # Create Generate Mesh action
-    self.generateMeshAction = QAction(QIcon(":/plugins/anugaInterface/generateMesh.png"), "Generate Mesh", self.iface.mainWindow())
-    self.generateMeshAction.setWhatsThis("Tool for generating an ANUGA mesh")
-    QObject.connect(self.generateMeshAction, SIGNAL("activated()"), self.generateMesh)
+    #self.generateMeshAction = QAction(QIcon(":/plugins/anugaInterface/generateMesh.png"), "Generate Mesh", self.iface.mainWindow())
+    self.generateMeshNGAction = QAction(QIcon(":/plugins/anugaInterface/generateMesh.png"), "Generate Mesh", self.iface.mainWindow())
+    #self.generateMeshAction.setWhatsThis("Tool for generating an ANUGA mesh")
+    self.generateMeshNGAction.setWhatsThis("Tool for generating an ANUGA mesh (NG)")
+    #QObject.connect(self.generateMeshAction, SIGNAL("activated()"), self.generateMesh)
+    QObject.connect(self.generateMeshNGAction, SIGNAL("activated()"), self.generateMeshNG)
     
     # Add toolbar button and menu item
-    self.iface.addToolBarIcon(self.generateMeshAction)
-    self.iface.addPluginToMenu("&Anuga Interface", self.generateMeshAction)
+    #self.iface.addToolBarIcon(self.generateMeshAction)
+    self.iface.addToolBarIcon(self.generateMeshNGAction)
+    #self.iface.addPluginToMenu("&Anuga Interface", self.generateMeshAction)
 
   def unload(self):
     # Remove the plugin menu item and icon
-    self.iface.removePluginMenu("&Anuga Interface",self.generateMeshAction)
-    self.iface.removeToolBarIcon(self.generateMeshAction)
+    #self.iface.removePluginMenu("&Anuga Interface",self.generateMeshAction)
+    #self.iface.removeToolBarIcon(self.generateMeshAction)
+    self.iface.removeToolBarIcon(self.generateMeshNGAction)
 
-  def generateMesh(self):
+  """def generateMesh(self):
     d = doGenerateMesh.Dialog(self.iface)
+    d.exec_()"""
+	
+  def generateMeshNG(self):
+    d = doGenerateMeshNG.Dialog(self.iface)
     d.exec_()

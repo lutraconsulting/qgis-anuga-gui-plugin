@@ -1,3 +1,5 @@
+This document is now out of date and requires updating
+
 To be updated...
 
 Define a poly layer for defining areas of different resolution with attributes Type (char) MaxTriArea (float)

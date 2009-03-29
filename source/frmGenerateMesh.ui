@@ -1,0 +1,269 @@
+<ui version="4.0" >
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>792</width>
+    <height>551</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Dialog</string>
+  </property>
+  <widget class="QLabel" name="labelMeshBoundary" >
+   <property name="geometry" >
+    <rect>
+     <x>190</x>
+     <y>30</y>
+     <width>81</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text" >
+    <string>Mesh Boundary</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="comboBoxMeshBoundary" >
+   <property name="geometry" >
+    <rect>
+     <x>290</x>
+     <y>30</y>
+     <width>421</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelUserSegments" >
+   <property name="geometry" >
+    <rect>
+     <x>190</x>
+     <y>60</y>
+     <width>81</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text" >
+    <string>User Segments</string>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="listWidgetUserSegments" >
+   <property name="geometry" >
+    <rect>
+     <x>290</x>
+     <y>60</y>
+     <width>421</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="selectionMode" >
+    <enum>QAbstractItemView::MultiSelection</enum>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="listWidgetUserRegions" >
+   <property name="geometry" >
+    <rect>
+     <x>290</x>
+     <y>140</y>
+     <width>421</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="selectionMode" >
+    <enum>QAbstractItemView::MultiSelection</enum>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelUserRegions" >
+   <property name="geometry" >
+    <rect>
+     <x>200</x>
+     <y>140</y>
+     <width>71</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text" >
+    <string>User Regions</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelUserPoints" >
+   <property name="geometry" >
+    <rect>
+     <x>210</x>
+     <y>300</y>
+     <width>61</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text" >
+    <string>User Points</string>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="listWidgetUserPoints" >
+   <property name="geometry" >
+    <rect>
+     <x>290</x>
+     <y>300</y>
+     <width>421</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="selectionMode" >
+    <enum>QAbstractItemView::MultiSelection</enum>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelUserHoles" >
+   <property name="geometry" >
+    <rect>
+     <x>210</x>
+     <y>220</y>
+     <width>61</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text" >
+    <string>User Holes</string>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="listWidgetUserHoles" >
+   <property name="geometry" >
+    <rect>
+     <x>290</x>
+     <y>220</y>
+     <width>421</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="selectionMode" >
+    <enum>QAbstractItemView::MultiSelection</enum>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelMinimumTriangleArea" >
+   <property name="geometry" >
+    <rect>
+     <x>110</x>
+     <y>450</y>
+     <width>161</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text" >
+    <string>Minimum Triangle Angle (degrees)</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEditMinimumTriangleArea" >
+   <property name="geometry" >
+    <rect>
+     <x>290</x>
+     <y>450</y>
+     <width>31</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text" >
+    <string>28</string>
+   </property>
+   <property name="maxLength" >
+    <number>3</number>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButtonClose" >
+   <property name="geometry" >
+    <rect>
+     <x>640</x>
+     <y>450</y>
+     <width>75</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text" >
+    <string>Close</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButtonGenerate" >
+   <property name="geometry" >
+    <rect>
+     <x>550</x>
+     <y>450</y>
+     <width>75</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text" >
+    <string>Generate</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="autoLoadMeshCheckBox" >
+   <property name="geometry" >
+    <rect>
+     <x>350</x>
+     <y>450</y>
+     <width>181</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text" >
+    <string>Automatically Load Mesh into GIS</string>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="listWidgetBoundaryTags" >
+   <property name="geometry" >
+    <rect>
+     <x>290</x>
+     <y>380</y>
+     <width>421</width>
+     <height>61</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelBoundaryTags" >
+   <property name="geometry" >
+    <rect>
+     <x>190</x>
+     <y>380</y>
+     <width>71</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text" >
+    <string>Boundary Tags</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>pushButtonGenerate</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>587</x>
+     <y>401</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>395</x>
+     <y>211</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButtonClose</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>677</x>
+     <y>401</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>395</x>
+     <y>211</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

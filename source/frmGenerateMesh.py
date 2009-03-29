@@ -1,0 +1,91 @@
+# -*- coding: utf-8 -*-
+
+# Form implementation generated from reading ui file 'frmGenerateMesh.ui'
+#
+# Created: Fri Mar 27 13:18:56 2009
+#      by: PyQt4 UI code generator 4.4.3
+#
+# WARNING! All changes made in this file will be lost!
+
+from PyQt4 import QtCore, QtGui
+
+class Ui_Dialog(object):
+    def setupUi(self, Dialog):
+        Dialog.setObjectName("Dialog")
+        Dialog.resize(792, 551)
+        self.labelMeshBoundary = QtGui.QLabel(Dialog)
+        self.labelMeshBoundary.setGeometry(QtCore.QRect(190, 30, 81, 16))
+        self.labelMeshBoundary.setObjectName("labelMeshBoundary")
+        self.comboBoxMeshBoundary = QtGui.QComboBox(Dialog)
+        self.comboBoxMeshBoundary.setGeometry(QtCore.QRect(290, 30, 421, 22))
+        self.comboBoxMeshBoundary.setObjectName("comboBoxMeshBoundary")
+        self.labelUserSegments = QtGui.QLabel(Dialog)
+        self.labelUserSegments.setGeometry(QtCore.QRect(190, 60, 81, 16))
+        self.labelUserSegments.setObjectName("labelUserSegments")
+        self.listWidgetUserSegments = QtGui.QListWidget(Dialog)
+        self.listWidgetUserSegments.setGeometry(QtCore.QRect(290, 60, 421, 71))
+        self.listWidgetUserSegments.setSelectionMode(QtGui.QAbstractItemView.MultiSelection)
+        self.listWidgetUserSegments.setObjectName("listWidgetUserSegments")
+        self.listWidgetUserRegions = QtGui.QListWidget(Dialog)
+        self.listWidgetUserRegions.setGeometry(QtCore.QRect(290, 140, 421, 71))
+        self.listWidgetUserRegions.setSelectionMode(QtGui.QAbstractItemView.MultiSelection)
+        self.listWidgetUserRegions.setObjectName("listWidgetUserRegions")
+        self.labelUserRegions = QtGui.QLabel(Dialog)
+        self.labelUserRegions.setGeometry(QtCore.QRect(200, 140, 71, 16))
+        self.labelUserRegions.setObjectName("labelUserRegions")
+        self.labelUserPoints = QtGui.QLabel(Dialog)
+        self.labelUserPoints.setGeometry(QtCore.QRect(210, 300, 61, 16))
+        self.labelUserPoints.setObjectName("labelUserPoints")
+        self.listWidgetUserPoints = QtGui.QListWidget(Dialog)
+        self.listWidgetUserPoints.setGeometry(QtCore.QRect(290, 300, 421, 71))
+        self.listWidgetUserPoints.setSelectionMode(QtGui.QAbstractItemView.MultiSelection)
+        self.listWidgetUserPoints.setObjectName("listWidgetUserPoints")
+        self.labelUserHoles = QtGui.QLabel(Dialog)
+        self.labelUserHoles.setGeometry(QtCore.QRect(210, 220, 61, 16))
+        self.labelUserHoles.setObjectName("labelUserHoles")
+        self.listWidgetUserHoles = QtGui.QListWidget(Dialog)
+        self.listWidgetUserHoles.setGeometry(QtCore.QRect(290, 220, 421, 71))
+        self.listWidgetUserHoles.setSelectionMode(QtGui.QAbstractItemView.MultiSelection)
+        self.listWidgetUserHoles.setObjectName("listWidgetUserHoles")
+        self.labelMinimumTriangleArea = QtGui.QLabel(Dialog)
+        self.labelMinimumTriangleArea.setGeometry(QtCore.QRect(110, 450, 161, 17))
+        self.labelMinimumTriangleArea.setObjectName("labelMinimumTriangleArea")
+        self.lineEditMinimumTriangleArea = QtGui.QLineEdit(Dialog)
+        self.lineEditMinimumTriangleArea.setGeometry(QtCore.QRect(290, 450, 31, 21))
+        self.lineEditMinimumTriangleArea.setMaxLength(3)
+        self.lineEditMinimumTriangleArea.setObjectName("lineEditMinimumTriangleArea")
+        self.pushButtonClose = QtGui.QPushButton(Dialog)
+        self.pushButtonClose.setGeometry(QtCore.QRect(640, 450, 75, 25))
+        self.pushButtonClose.setObjectName("pushButtonClose")
+        self.pushButtonGenerate = QtGui.QPushButton(Dialog)
+        self.pushButtonGenerate.setGeometry(QtCore.QRect(550, 450, 75, 25))
+        self.pushButtonGenerate.setObjectName("pushButtonGenerate")
+        self.autoLoadMeshCheckBox = QtGui.QCheckBox(Dialog)
+        self.autoLoadMeshCheckBox.setGeometry(QtCore.QRect(350, 450, 181, 20))
+        self.autoLoadMeshCheckBox.setObjectName("autoLoadMeshCheckBox")
+        self.listWidgetBoundaryTags = QtGui.QListWidget(Dialog)
+        self.listWidgetBoundaryTags.setGeometry(QtCore.QRect(290, 380, 421, 61))
+        self.listWidgetBoundaryTags.setObjectName("listWidgetBoundaryTags")
+        self.labelBoundaryTags = QtGui.QLabel(Dialog)
+        self.labelBoundaryTags.setGeometry(QtCore.QRect(190, 380, 71, 16))
+        self.labelBoundaryTags.setObjectName("labelBoundaryTags")
+
+        self.retranslateUi(Dialog)
+        QtCore.QObject.connect(self.pushButtonGenerate, QtCore.SIGNAL("clicked()"), Dialog.accept)
+        QtCore.QObject.connect(self.pushButtonClose, QtCore.SIGNAL("clicked()"), Dialog.close)
+        QtCore.QMetaObject.connectSlotsByName(Dialog)
+
+    def retranslateUi(self, Dialog):
+        Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "Dialog", None, QtGui.QApplication.UnicodeUTF8))
+        self.labelMeshBoundary.setText(QtGui.QApplication.translate("Dialog", "Mesh Boundary", None, QtGui.QApplication.UnicodeUTF8))
+        self.labelUserSegments.setText(QtGui.QApplication.translate("Dialog", "User Segments", None, QtGui.QApplication.UnicodeUTF8))
+        self.labelUserRegions.setText(QtGui.QApplication.translate("Dialog", "User Regions", None, QtGui.QApplication.UnicodeUTF8))
+        self.labelUserPoints.setText(QtGui.QApplication.translate("Dialog", "User Points", None, QtGui.QApplication.UnicodeUTF8))
+        self.labelUserHoles.setText(QtGui.QApplication.translate("Dialog", "User Holes", None, QtGui.QApplication.UnicodeUTF8))
+        self.labelMinimumTriangleArea.setText(QtGui.QApplication.translate("Dialog", "Minimum Triangle Angle (degrees)", None, QtGui.QApplication.UnicodeUTF8))
+        self.lineEditMinimumTriangleArea.setText(QtGui.QApplication.translate("Dialog", "28", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButtonClose.setText(QtGui.QApplication.translate("Dialog", "Close", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButtonGenerate.setText(QtGui.QApplication.translate("Dialog", "Generate", None, QtGui.QApplication.UnicodeUTF8))
+        self.autoLoadMeshCheckBox.setText(QtGui.QApplication.translate("Dialog", "Automatically Load Mesh into GIS", None, QtGui.QApplication.UnicodeUTF8))
+        self.labelBoundaryTags.setText(QtGui.QApplication.translate("Dialog", "Boundary Tags", None, QtGui.QApplication.UnicodeUTF8))
+

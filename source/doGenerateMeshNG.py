@@ -119,7 +119,7 @@ class Dialog(QDialog, Ui_Dialog):
     
     # Import the mesh into QGIS?
     if self.autoLoadMeshCheckBox.isChecked():
-      self.loadMesh( outFile )
+      self.meshToGIS( m, outFile )
     
     """ 
       generate the following:
@@ -274,6 +274,51 @@ class Dialog(QDialog, Ui_Dialog):
     fieldmap=entity.attributeMap()
     #QMessageBox.information(None, "ERROR", "Returning " + fieldmap[col].toString() )
     return fieldmap[col].toString()
+    
+  def meshToGIS(self, mesh, fileName ):
+    """
+      Function to write a shape file of triangles from a mesh object
+    """
+    
+    fileName = fileName.replace('c:','')
+    fileName = fileName.replace('.tsh','.shp')
+    fields = { 0 : QgsField("ID", QVariant.Int) }
+    # Check for existance of file and unlink if it's there
+    if os.access(fileName, os.F_OK):
+      os.remove(str(fileName))
+    
+    writer = QgsVectorFileWriter(fileName, "CP1250", fields, QGis.WKBPolygon, None)
+    if writer.hasError() != QgsVectorFileWriter.NoError:
+      QMessageBox.information(None, "ERROR", "Error when creating shapefile: " + str(writer.hasError()) )
+      
+    triangles = mesh.getTriangulation()
+    verts = mesh.getMeshVertices()
+    triID = 0
+    for tri in triangles:
+      i0 = tri[0]
+      i1 = tri[1]
+      i2 = tri[2]
+      fet = QgsFeature()
+      p0 = QgsPoint(verts[i0][0], verts[i0][1])
+      p1 = QgsPoint(verts[i1][0], verts[i1][1])
+      p2 = QgsPoint(verts[i2][0], verts[i2][1])
+      poly = QgsGeometry.fromPolygon( [ [ p0, p1, p2 ] ] )
+      fet.setGeometry( poly )
+      fet.addAttribute(0, QVariant(triID))
+      writer.addFeature(fet)
+      triID += 1
+    QMessageBox.information(None, "DEBUG", "Wrote " + str(triID+1) + " triangles" )
+    
+    del writer
+    tmpMeshLayer = QgsVectorLayer(fileName, "AnuGA Mesh", "ogr")
+    if not tmpMeshLayer.isValid():
+      QMessageBox.information(None, "ERROR", "Failed to load mesh shape file" )
+    else:
+      QgsMapLayerRegistry.instance().addMapLayer(tmpMeshLayer)
+      
+    # Create a spatial index in order to speed things up a little
+    if tmpMeshLayer.dataProvider().createSpatialIndex() is False:
+      QMessageBox.information(None, "ERROR", "Failed to create spatial index" )
     
   def loadMesh(self, fileName ):
     

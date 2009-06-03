@@ -2,5 +2,9 @@ TODO
 
 Implement break-lines
 Mesh quality checking
+	
 
 -D switch
+
+Check for non standard imports and throw a good excedption if missing
+A detailed set of installation instructions and maybe a windows installer

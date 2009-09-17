@@ -111,7 +111,7 @@ class Dialog(QDialog, Ui_Dialog):
               regions=userRegions,
               holes=userHoles )
               
-    m.generate_mesh( maximum_triangle_area=2000 )
+    m.generate_mesh( maximum_triangle_area=200000 )
     m.export_mesh_file( outFile )
     
     # lets pickle this for later

@@ -8,3 +8,6 @@ Mesh quality checking
 
 Check for non standard imports and throw a good excedption if missing
 A detailed set of installation instructions and maybe a windows installer
+
+Get rid of the hard coded max_tri_size
+

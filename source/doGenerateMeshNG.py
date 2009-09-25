@@ -194,7 +194,18 @@ class Dialog(QDialog, Ui_Dialog):
           i = i + 1
         """if entity.geometry().type() == 2: # Polygon
           userSegs.append( Segment(recentBalls, firstBalls) )"""
-    # Now lets search through the segments and see which ones 
+    # Add user defined vertices
+    for layer in vertLayers:
+      for entity in self.featuresOfType(layer, "Type", ['P']):
+        qPoint = entity.geometry().vertexAt(0)
+        for vert in userVerts:
+          dupVert = False
+          if abs( qPoint.x() - vert.x ) < 0.001:
+            if abs( qPoint.y() - vert.y ) < 0.001:
+              # Dup point
+              dupVert = True
+          if not dupVert:
+            userVerts.append( Vertex(qPoint.x(), qPoint.y()) )
     return userVerts, userSegs
     
   def regionsFromLayers(self, regionLayers):

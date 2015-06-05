@@ -258,22 +258,11 @@ class Dialog(QDialog, Ui_Dialog):
     return selectedFeatures
 
   def attributeValue(self, entity, layer, attributeName):
-    provider = layer.dataProvider()
-    #provider.reset()
-    fieldmap = provider.fields()
-    col = -1
-    for (k,attr) in fieldmap.iteritems():      
-      if attr.name() == attributeName:
-        #QMessageBox.information(None, "DEBUG", "Found type at " + str(k) )
-        col = k
-        allAttrs = provider.attributeIndexes()
-        provider.select(allAttrs)
-    if col == -1:
-      QMessageBox.information(None, "ERROR", "Could not find attribute called " + str(attributeName) + " in layer " + str(layer.name()) )
-      return
-    fieldmap=entity.attributeMap()
-    #QMessageBox.information(None, "ERROR", "Returning " + fieldmap[col].toString() )
-    return fieldmap[col].toString()
+    try:
+      return entity[attributeName]
+    except KeyError:
+      QMessageBox.information(None, "ERROR",
+        "Could not find attribute called %s in layer %s" % (attributeName, layer.name()))
     
   def meshToGIS(self, mesh, fileName ):
     """

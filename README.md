@@ -22,11 +22,15 @@ Define a polygon layer for defining areas of different resolution with attribute
      + I - internal region
   * MaxTriArea (decimal)
 	 + Maximum triangle area
-Define a line layer, with the following attributes, ensure the layer is snapped to the boundary polygon entity above
+	 
+Define a line layer, with the following attributes, ensure the layer is snapped to the boundary polygon entity above. You can use [AutoTrace plugin](http://www.lutraconsulting.co.uk/products/autotrace/).
 
   * Type (char):
      + BT - boundary tag
   * Name (char)
 	 + its name
-
+	 
+For further information about file formats, see qgis_anuga_gui_plugin_test_data.zip under test\data
+	 
 Run the plugin and select relevant layers to generate mesh.
+

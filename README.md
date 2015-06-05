@@ -23,7 +23,9 @@ Define a poly layer for defining areas of different resolution with attributes T
     
 Define a line layer, with the following atts, snap is to the B entity above
 
-    * Type (char) - "BT" boundary tag
-    * Name (char) it's name
+    * Type (char) 
+		+ "BT" boundary tag
+    * Name (char) 
+		+ its name
 
 Run the plugin and select relevant layers to generate mesh.

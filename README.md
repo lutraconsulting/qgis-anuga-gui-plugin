@@ -14,18 +14,19 @@ Download this repo as zip file, extract the zip file and place the folder under 
 # How to use AnuGA-GUI
 First you need to define your GIS input layers:
 
-Define a poly layer for defining areas of different resolution with attributes Type (char) MaxTriArea (float)
+Define a polygon layer for defining areas of different resolution with attributes Type (char) MaxTriArea (float)
 
-  * Type:
-     + B - boundary poly
+  * Type (char):
+     + B - boundary polygon
      + H - hole (needn't have a maxtriarea)
      + I - internal region
-    
-Define a line layer, with the following atts, snap is to the B entity above
+  * MaxTriArea (decimal)
+	 + Maximum triangle area
+Define a line layer, with the following attributes, ensure the layer is snapped to the boundary polygon entity above
 
-    * Type (char) 
-		+ "BT" boundary tag
-    * Name (char) 
-		+ its name
+  * Type (char):
+     + BT - boundary tag
+  * Name (char)
+	 + its name
 
 Run the plugin and select relevant layers to generate mesh.

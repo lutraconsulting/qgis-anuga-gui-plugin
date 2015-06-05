@@ -1,18 +1,23 @@
-This is the repository for the Open Source Software project
+This is a simple plugin to generate mesh for AnuGA:
+https://github.com/GeoscienceAustralia/anuga_core
 
-GAI - Graphical ANUGA Interface (pronounced "Jay")
+Requirements
+You need to have AnuGA and QGIS installed on your computer.
 
-which aims at developing an intuitive visual front end for setting up ANUGA models.
+Installation
+Download this repo as zip file, extract the zip file and place the folder under QGIS plugin directory (in Windows for example: C:\Users\NAME\.qgis2\python\plugins\ in Linux: ~/.qgis2/plugins/python
 
-The main developers are currently
-  Vince Edgewater
-  Saber
-  
-with Ole Nielsen who is leading the ANUGA software development project as project advisor.
+How to use AnuGA-GUI
+First you need to define your GIS input layers:
 
-For installation instructions, please refer to INSTALL.txt
+Define a poly layer for defining areas of different resolution with attributes Type (char) MaxTriArea (float)
+  Type:
+    B - boundary poly
+    H - hole (needn't have a maxtriarea)
+    I - internal region
+    
+Define a line layer, with the following atts, snap is to the B entity above
+    Type (char) - "BT" boundary tag
+    Name (char) it's name
 
-amd64 users (or x64 or whatever) - there are roumors of a problem with python numeric + python 2.5 + amd64
-
-if you are having problems, try the force python 2.4 button which should fix this issue
-  
+Run the plugin and select relevant layers to generate mesh.

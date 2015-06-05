@@ -1,8 +1,0 @@
-<RCC>
-  <qresource prefix="/plugins/anugaInterface" >
-    <file>generateMesh.png</file>
-  </qresource>
-  <qresource prefix="/plugins/anugaInterface" >
-    <file>auditMesh.png</file>
-  </qresource>
-</RCC>

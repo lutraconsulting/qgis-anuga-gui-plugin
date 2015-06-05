@@ -78,7 +78,7 @@ class Dialog(QDialog, Ui_Dialog):
     #self.comboBoxMeshBoundary.setCurrentIndex(1)
     i = 0
     while i < self.comboBoxMeshBoundary.count():
-      if self.comboBoxMeshBoundary.itemText(i).contains('bound'):
+      if self.comboBoxMeshBoundary.itemText(i).find('bound') != -1:
         self.comboBoxMeshBoundary.setCurrentIndex(i)
       i = i + 1
 
@@ -247,24 +247,13 @@ class Dialog(QDialog, Ui_Dialog):
   def featuresOfType(self, layer, attributeName, values):
     selectedFeatures = []
     provider = layer.dataProvider()
-    #provider.reset()
-    fieldmap = provider.fields()
-    col = -1
-    for (k,attr) in fieldmap.iteritems():      
-      if attr.name() == attributeName:
-        col = k
-        allAttrs = provider.attributeIndexes()
-        provider.select(allAttrs)
-    if col == -1:
-      #QMessageBox.information(None, "ERROR", "Could not find attribute called " + str(attributeName) + " in layer " + str(layer.name()) )
-      return None
-    while True:
-      f=QgsFeature()
-      if provider.nextFeature(f) is False:
-        break
-      fieldmap = f.attributeMap()
+    if provider.fieldNameIndex(attributeName) == -1:
+      #QMessageBox.information(None, "ERROR",
+      #  "Could not find attribute called %s in layer %s" % (attributeName, layer.name()))
+      return []
+    for f in provider.getFeatures():
       for val in values:
-        if fieldmap[col].toString() == val:
+        if f[attributeName] == val:
           selectedFeatures.append(f)
     return selectedFeatures
 
@@ -293,7 +282,8 @@ class Dialog(QDialog, Ui_Dialog):
     
     fileName = fileName.replace('c:','')
     fileName = fileName.replace('.tsh','.shp')
-    fields = { 0 : QgsField("ID", QVariant.Int) }
+    fields = QgsFields()
+    fields.append(QgsField("ID", QVariant.Int))
     # Check for existance of file and unlink if it's there
     if os.access(fileName, os.F_OK):
       os.remove(str(fileName))
@@ -309,13 +299,13 @@ class Dialog(QDialog, Ui_Dialog):
       i0 = tri[0]
       i1 = tri[1]
       i2 = tri[2]
-      fet = QgsFeature()
+      fet = QgsFeature(fields)
       p0 = QgsPoint(verts[i0][0], verts[i0][1])
       p1 = QgsPoint(verts[i1][0], verts[i1][1])
       p2 = QgsPoint(verts[i2][0], verts[i2][1])
-      poly = QgsGeometry.fromPolygon( [ [ p0, p1, p2 ] ] )
+      poly = QgsGeometry.fromPolygon( [ [ p0, p1, p2, p0 ] ] )
       fet.setGeometry( poly )
-      fet.addAttribute(0, QVariant(triID))
+      fet[0] = triID
       writer.addFeature(fet)
       triID += 1
     QMessageBox.information(None, "DEBUG", "Wrote " + str(triID+1) + " triangles" )
